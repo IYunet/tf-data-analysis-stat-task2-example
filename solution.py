@@ -4,14 +4,21 @@ import numpy as np
 from scipy.stats import norm
 
 
-chat_id = 123456 # Ваш chat ID, не меняйте название переменной
+chat_id = 426527714 # Ваш chat ID, не меняйте название переменной
 
 def solution(p: float, x: np.array) -> tuple:
     # Измените код этой функции
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
-    alpha = 1 - p
-    loc = x.mean()
-    scale = np.sqrt(np.var(x)) / np.sqrt(len(x))
-    return loc - scale * norm.ppf(1 - alpha / 2), \
-           loc - scale * norm.ppf(alpha / 2)
+    n = x.shape[0]
+    alpha = p
+    df = n - 1 # число степеней свободы
+
+    # нахождение квантилей распределения хи-квадрат
+    chi2_lower = chi2.ppf(alpha/2, df)
+    chi2_upper = chi2.ppf(1 - alpha/2, df)
+
+    # нахождение границ доверительного интервала
+    lower_bound = (n-1)*S2/chi2_upper
+    upper_bound = (n-1)*S2/chi2_lower
+    return np.sqrt(lower_bound), np.sqrt(upper_bound)
