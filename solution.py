@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 
 from scipy.stats import norm
+from scipy.stats import chi2
 
 
 chat_id = 426527714 # Ваш chat ID, не меняйте название переменной
@@ -12,6 +13,7 @@ def solution(p: float, x: np.array) -> tuple:
     # Не меняйте название функции и её аргументы
     n = x.shape[0]
     alpha = p
+    S2 = np.var(x, ddof=1)
     df = n - 1 # число степеней свободы
 
     # нахождение квантилей распределения хи-квадрат
