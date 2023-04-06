@@ -9,11 +9,8 @@ chat_id = 426527714 # Ваш chat ID, не меняйте название пе�
 
 def solution(p: float, x: np.array) -> tuple:
     alpha = 1 - p
-    x = x / 44
-    n = x.shape[0]
-    s2 = ((x - x.mean())**2).mean()
-    quant1 = chi2.ppf(1-alpha/2, n-1)
-    quant2 = chi2.ppf(alpha/2, n-1)
-    left = np.sqrt((n - 1) * s2 / quant1)
-    right = np.sqrt((n - 1) * s2 / quant2)
-    return (left,right)
+    n = x.size
+    sum_x_2 = sum([e ** 2 for e in x])
+    q_l = chi2(2 * n).ppf(q=alpha / 2)
+    q_r = chi2(2 * n).ppf(q=1 - alpha / 2)
+    return np.sqrt(sum_x_2 / q_r / 44), np.sqrt(sum_x_2 / q_l / 44)
